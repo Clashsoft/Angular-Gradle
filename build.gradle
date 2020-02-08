@@ -1,0 +1,35 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
+
+gradlePlugin {
+    plugins {
+        angularGradle {
+            id = 'de.clashsoft.angular-gradle'
+            implementationClass = 'de.clashsoft.gradle.angular.AngularGradlePlugin'
+        }
+    }
+}
+
+sourceSets {
+    functionalTest {
+    }
+}
+
+gradlePlugin.testSourceSets(sourceSets.functionalTest)
+configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
+
+tasks.register('functionalTest', Test) {
+    it.testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    it.classpath = sourceSets.functionalTest.runtimeClasspath
+}
+
+check.dependsOn 'functionalTest'
