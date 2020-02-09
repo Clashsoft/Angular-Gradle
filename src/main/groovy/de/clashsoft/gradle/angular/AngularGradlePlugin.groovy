@@ -16,7 +16,8 @@ class AngularGradlePlugin implements Plugin<Project> {
 			readNgConfigPackageManager()
 		})
 
-		config.buildArgs.convention([ 'build' ])
+		final String buildConfigArg = project.hasProperty('angular-dev') ? '--configuration=gradle' : '--prod'
+		config.buildArgs.convention([ 'build', buildConfigArg ])
 		config.packageManagerArgs.convention([ 'install' ])
 
 		config.outputDir.convention(config.appDir.map {
@@ -53,6 +54,14 @@ class AngularGradlePlugin implements Plugin<Project> {
 
 		project.tasks.register('cleanAngular', Delete) {
 			it.delete "$config.appDir/dist"
+		}
+
+		// setup
+		if (!project.hasProperty('no-angular')) {
+			project.sourceSets.main.resources.srcDir(project.files(config.outputDir).builtBy('buildAngular'))
+			project.tasks.named('clean') {
+				it.dependsOn 'cleanAngular'
+			}
 		}
 	}
 
