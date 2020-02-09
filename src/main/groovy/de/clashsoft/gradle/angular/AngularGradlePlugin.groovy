@@ -4,6 +4,7 @@ import groovy.transform.Memoized
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.BasePlugin
+import org.gradle.api.tasks.Delete
 
 class AngularGradlePlugin implements Plugin<Project> {
 	@Override
@@ -48,6 +49,10 @@ class AngularGradlePlugin implements Plugin<Project> {
 
 			it.inputs.files(project.fileTree(config.appDir).exclude('dist', 'node_modules'))
 			it.outputs.dir(config.appDir.map { "$it/dist" })
+		}
+
+		project.tasks.register('cleanAngular', Delete) {
+			it.delete "$config.appDir/dist"
 		}
 	}
 
