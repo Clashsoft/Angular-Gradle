@@ -1,8 +1,11 @@
 plugins {
     id 'java-gradle-plugin'
+    id 'groovy'
 }
 
 repositories {
+    mavenLocal()
+    mavenCentral()
     jcenter()
 }
 
