@@ -13,7 +13,7 @@ Add to the top of `build.gradle`:
 ```groovy
 plugins {
     // ...
-    id 'de.clashsoft.angular-gradle' version '0.1.1'
+    id 'de.clashsoft.angular-gradle' version '0.1.2'
 }
 ```
 
