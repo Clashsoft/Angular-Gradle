@@ -1,5 +1,6 @@
 package de.clashsoft.gradle.angular
 
+import groovy.transform.Memoized
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.BasePlugin
@@ -8,6 +9,10 @@ class AngularGradlePlugin implements Plugin<Project> {
 	@Override
 	void apply(Project project) {
 		final AngularGradleConfig config = project.extensions.create('angular', AngularGradleConfig)
+
+		config.packageManager.convention(project.provider {
+			readNgConfigPackageManager()
+		})
 
 		project.tasks.register('installAngularDependencies', InstallAngularDependenciesTask) {
 			it.group = BasePlugin.BUILD_GROUP
@@ -31,5 +36,17 @@ class AngularGradlePlugin implements Plugin<Project> {
 
 	private static boolean isWindows() {
 		return System.getProperty('os.name').toUpperCase().contains('WINDOWS')
+	}
+
+	@Memoized
+	private static String readNgConfigPackageManager() {
+		def cmd = mkCmd('ng')
+		def process = (cmd + ' config cli.packageManager').execute()
+		def local = process.text
+		process.waitFor()
+		if (process.exitValue() == 0) {
+			return local.trim()
+		}
+		return (cmd + ' config -g cli.packageManager').execute().text.trim()
 	}
 }
