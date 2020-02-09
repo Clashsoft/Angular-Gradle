@@ -4,7 +4,9 @@ import groovy.transform.Memoized
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.BasePlugin
+import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.Delete
+import org.gradle.api.tasks.SourceSetContainer
 
 class AngularGradlePlugin implements Plugin<Project> {
 	@Override
@@ -59,7 +61,10 @@ class AngularGradlePlugin implements Plugin<Project> {
 
 		// setup
 		if (!project.hasProperty('no-angular')) {
-			project.sourceSets.main.resources.srcDir(project.files(config.outputDir).builtBy('buildAngular'))
+			final JavaPluginConvention javaPlugin = project.convention.getPlugin(JavaPluginConvention)
+			final SourceSetContainer sourceSets = javaPlugin.sourceSets
+
+			sourceSets.main.resources.srcDir(project.files(config.outputDir).builtBy('buildAngular'))
 			project.tasks.named('clean') {
 				it.dependsOn 'cleanAngular'
 			}
