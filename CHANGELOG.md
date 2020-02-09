@@ -13,3 +13,7 @@
 # v0.1.3
 
 * Fixed incorrect passing of command arguments for install and build.
+
+# v0.1.4
+
+* The plugin is now compiled with Java 8.
