@@ -4,6 +4,7 @@ import groovy.transform.Memoized
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.BasePlugin
+import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.SourceSetContainer
@@ -11,6 +12,8 @@ import org.gradle.api.tasks.SourceSetContainer
 class AngularGradlePlugin implements Plugin<Project> {
 	@Override
 	void apply(Project project) {
+		project.pluginManager.apply(JavaPlugin)
+
 		final AngularGradleConfig config = project.extensions.create('angular', AngularGradleConfig)
 
 		// conventions
