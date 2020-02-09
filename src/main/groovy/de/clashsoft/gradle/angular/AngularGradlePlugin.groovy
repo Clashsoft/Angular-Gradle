@@ -10,10 +10,19 @@ class AngularGradlePlugin implements Plugin<Project> {
 	void apply(Project project) {
 		final AngularGradleConfig config = project.extensions.create('angular', AngularGradleConfig)
 
+		// conventions
 		config.packageManager.convention(project.provider {
 			readNgConfigPackageManager()
 		})
 
+		config.buildArgs.convention([ 'build' ])
+		config.packageManagerArgs.convention([ 'install' ])
+
+		config.outputDir.convention(config.appDir.map {
+			"$it/dist/angular-gradle-demo"
+		})
+
+		// tasks
 		project.tasks.register('installAngularDependencies', InstallAngularDependenciesTask) {
 			it.group = BasePlugin.BUILD_GROUP
 			it.workingDir = config.appDir
@@ -25,7 +34,6 @@ class AngularGradlePlugin implements Plugin<Project> {
 			// it.outputs.dir "$appDir/node_modules"
 
 			it.executable = mkCmd(config.packageManager.get())
-			it.args('install')
 			it.args(config.packageManagerArgs)
 		}
 
@@ -36,7 +44,6 @@ class AngularGradlePlugin implements Plugin<Project> {
 			it.workingDir = config.appDir
 
 			it.executable = mkCmd('ng')
-			it.args('build')
 			it.args(config.buildArgs)
 
 			it.inputs.files(project.fileTree(config.appDir).exclude('dist', 'node_modules'))

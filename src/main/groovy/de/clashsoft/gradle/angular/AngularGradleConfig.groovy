@@ -23,9 +23,5 @@ class AngularGradleConfig {
 		this.packageManagerArgs = factory.listProperty(String)
 
 		this.buildArgs = factory.listProperty(String)
-
-		this.outputDir.convention(this.appDir.map {
-			"$it/dist/angular-gradle-demo"
-		})
 	}
 }
