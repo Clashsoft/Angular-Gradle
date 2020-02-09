@@ -42,7 +42,7 @@ class AngularGradlePlugin implements Plugin<Project> {
 			// it.outputs.dir "$appDir/node_modules"
 
 			it.executable = mkCmd(config.packageManager.get())
-			it.args(config.packageManagerArgs)
+			it.args(config.packageManagerArgs.get())
 		}
 
 		project.tasks.register('buildAngular', BuildAngularTask) {
@@ -52,7 +52,7 @@ class AngularGradlePlugin implements Plugin<Project> {
 			it.workingDir = config.appDir
 
 			it.executable = mkCmd('ng')
-			it.args(config.buildArgs)
+			it.args(config.buildArgs.get())
 
 			it.inputs.files(project.fileTree(config.appDir).exclude('dist', 'node_modules'))
 			it.outputs.dir(config.appDir.map { "$it/dist" })
