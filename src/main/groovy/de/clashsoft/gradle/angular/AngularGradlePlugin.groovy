@@ -22,7 +22,7 @@ class AngularGradlePlugin implements Plugin<Project> {
 
 		config.appDir.convention('src/main/angular')
 		config.outputDir.convention(config.appDir.map {
-			"$it/dist/angular-gradle-demo"
+			"$it/dist/$project.name"
 		})
 
 		// tasks
