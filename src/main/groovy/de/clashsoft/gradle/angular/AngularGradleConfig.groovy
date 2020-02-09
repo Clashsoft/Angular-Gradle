@@ -13,12 +13,16 @@ class AngularGradleConfig {
 	final Property<String> packageManager
 	final ListProperty<String> packageManagerArgs
 
+	final ListProperty<String> buildArgs
+
 	@Inject
 	AngularGradleConfig(ObjectFactory factory) {
 		this.appDir = factory.property(String)
 		this.outputDir = factory.property(String)
 		this.packageManager = factory.property(String)
 		this.packageManagerArgs = factory.listProperty(String)
+
+		this.buildArgs = factory.listProperty(String)
 
 		this.outputDir.convention(this.appDir.map {
 			"$it/dist/angular-gradle-demo"
