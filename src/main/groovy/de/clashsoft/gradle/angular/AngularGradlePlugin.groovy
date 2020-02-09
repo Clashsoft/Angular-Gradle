@@ -28,6 +28,20 @@ class AngularGradlePlugin implements Plugin<Project> {
 			it.args('install')
 			it.args(config.packageManagerArgs)
 		}
+
+		project.tasks.register('buildAngular', BuildAngularTask) {
+			it.group = BasePlugin.BUILD_GROUP
+			it.dependsOn 'installAngularDependencies'
+
+			it.workingDir = config.appDir
+
+			it.executable = mkCmd('ng')
+			it.args('build')
+			it.args(config.buildArgs)
+
+			it.inputs.files(project.fileTree(config.appDir).exclude('dist', 'node_modules'))
+			it.outputs.dir(config.appDir.map { "$it/dist" })
+		}
 	}
 
 	private static String mkCmd(String stringProperty) {
