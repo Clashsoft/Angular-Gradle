@@ -9,3 +9,7 @@
 # v0.1.2
 
 * Fixed the `java` plugin not being automatically applied.
+
+# v0.1.3
+
+* Fixed incorrect passing of command arguments for install and build.
