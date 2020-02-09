@@ -20,6 +20,7 @@ class AngularGradlePlugin implements Plugin<Project> {
 		config.buildArgs.convention([ 'build', buildConfigArg ])
 		config.packageManagerArgs.convention([ 'install' ])
 
+		config.appDir.convention('src/main/angular')
 		config.outputDir.convention(config.appDir.map {
 			"$it/dist/angular-gradle-demo"
 		})
