@@ -17,3 +17,7 @@
 # v0.1.4
 
 * The plugin is now compiled with Java 8.
+
+# v0.1.5
+
+* Bumped version number.
