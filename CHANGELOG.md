@@ -21,3 +21,7 @@
 # v0.1.5
 
 * Bumped version number.
+
+# v0.1.6
+
+* Fixed the package manager being determined incorrectly.
