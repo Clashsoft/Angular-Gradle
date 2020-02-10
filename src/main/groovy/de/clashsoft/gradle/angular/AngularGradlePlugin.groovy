@@ -17,8 +17,8 @@ class AngularGradlePlugin implements Plugin<Project> {
 		final AngularGradleConfig config = project.extensions.create('angular', AngularGradleConfig)
 
 		// conventions
-		config.packageManager.convention(project.provider {
-			readNgConfigPackageManager()
+		config.packageManager.convention(config.appDir.map {
+			readNgConfigPackageManager(it)
 		})
 
 		final String buildConfigArg = project.hasProperty('angular-dev') ? '--configuration=gradle' : '--prod'
@@ -74,8 +74,8 @@ class AngularGradlePlugin implements Plugin<Project> {
 		}
 	}
 
-	private static String mkCmd(String stringProperty) {
-		return isWindows() ? stringProperty + '.cmd' : stringProperty
+	private static String mkCmd(String executable) {
+		return isWindows() ? executable + '.cmd' : executable
 	}
 
 	private static boolean isWindows() {
@@ -83,14 +83,17 @@ class AngularGradlePlugin implements Plugin<Project> {
 	}
 
 	@Memoized
-	private static String readNgConfigPackageManager() {
+	private static String readNgConfigPackageManager(String appDir) {
 		def cmd = mkCmd('ng')
-		def process = (cmd + ' config cli.packageManager').execute()
-		def local = process.text
+		def result = execNullable(cmd + ' config cli.packageManager', appDir)
+			?: execNullable(cmd + ' config -g cli.packageManager', appDir)
+			?: 'npm'
+		return result.trim()
+	}
+
+	private static String execNullable(String cmd, String dir) {
+		final Process process = cmd.execute(null, new File(dir))
 		process.waitFor()
-		if (process.exitValue() == 0) {
-			return local.trim()
-		}
-		return (cmd + ' config -g cli.packageManager').execute().text.trim()
+		return process.exitValue() == 0 ? process.text : null
 	}
 }
