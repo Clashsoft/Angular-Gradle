@@ -6,8 +6,13 @@ jdk:
     - openjdk11
     - openjdk12
 
+node_js: "13.7.0"
+
 git:
     depth: false
+
+before_install:
+    - npm install -g @angular/cli
 
 # --------------- Gradle Cache ---------------
 
