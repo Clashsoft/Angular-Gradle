@@ -46,7 +46,7 @@ class AngularGradlePluginFunctionalTest {
 
 		final File projectDir = new File(testProjectDir.root, 'Angular-Gradle-Demo-master')
 		final GradleRunner runner = GradleRunner.create()
-			.withArguments('check')
+			.withArguments('check', '--stacktrace')
 			.withProjectDir(projectDir)
 			.withEnvironment(System.getenv())
 		final BuildResult result = run(runner)
