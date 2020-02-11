@@ -18,7 +18,7 @@ class AngularGradlePlugin implements Plugin<Project> {
 
 		// conventions
 		config.packageManager.convention(config.appDir.map {
-			readNgConfigPackageManager(it)
+			readNgConfigPackageManager(project.file(it))
 		})
 
 		final String buildConfigArg = project.hasProperty('angular-dev') ? '--configuration=gradle' : '--prod'
@@ -83,7 +83,7 @@ class AngularGradlePlugin implements Plugin<Project> {
 	}
 
 	@Memoized
-	private static String readNgConfigPackageManager(String appDir) {
+	private static String readNgConfigPackageManager(File appDir) {
 		def cmd = mkCmd('ng')
 		def result = execNullable(cmd + ' config cli.packageManager', appDir)
 			?: execNullable(cmd + ' config -g cli.packageManager', appDir)
@@ -91,8 +91,8 @@ class AngularGradlePlugin implements Plugin<Project> {
 		return result.trim()
 	}
 
-	private static String execNullable(String cmd, String dir) {
-		final Process process = cmd.execute(null, new File(dir))
+	private static String execNullable(String cmd, File dir) {
+		final Process process = cmd.execute(null, dir)
 		process.waitFor()
 		return process.exitValue() == 0 ? process.text : null
 	}
