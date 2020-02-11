@@ -1,5 +1,7 @@
 # Angular Gradle Plugin
 
+[![Build Status](https://travis-ci.org/Clashsoft/Angular-Gradle.svg?branch=master)](https://travis-ci.org/Clashsoft/Angular-Gradle)
+
 This plugin allows you to integrate Angular frontends into your Gradle build.
 
 ## Full Example
