@@ -29,3 +29,4 @@
 # v0.1.7
 
 * Fixed automatic package manager detection using relative file paths.
+* Fixed automatic package manager detection failing if appDir does not exist.

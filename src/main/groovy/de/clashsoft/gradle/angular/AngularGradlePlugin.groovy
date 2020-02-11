@@ -84,11 +84,17 @@ class AngularGradlePlugin implements Plugin<Project> {
 
 	@Memoized
 	private static String readNgConfigPackageManager(File appDir) {
-		def cmd = mkCmd('ng')
-		def result = execNullable(cmd + ' config cli.packageManager', appDir)
-			?: execNullable(cmd + ' config -g cli.packageManager', appDir)
-			?: 'npm'
-		return result.trim()
+		final String cmd = mkCmd('ng')
+
+		String result
+		if (appDir && appDir.isDirectory() && (result = execNullable(cmd + ' config cli.packageManager', appDir))) {
+			return result.trim()
+		}
+		if ((result = execNullable(cmd + ' config -g cli.packageManager', null))) {
+			return result.trim()
+		}
+
+		return 'npm'
 	}
 
 	private static String execNullable(String cmd, File dir) {
