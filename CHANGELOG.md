@@ -25,3 +25,7 @@
 # v0.1.6
 
 * Fixed the package manager being determined incorrectly.
+
+# v0.1.7
+
+* Fixed automatic package manager detection using relative file paths.
