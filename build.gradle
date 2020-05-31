@@ -1,7 +1,8 @@
 plugins {
     id 'java-gradle-plugin'
     id 'groovy'
-    id 'com.gradle.plugin-publish' version '0.10.1'
+	// https://plugins.gradle.org/plugin/com.gradle.plugin-publish
+    id 'com.gradle.plugin-publish' version '0.12.0'
 }
 
 group = 'de.clashsoft'
