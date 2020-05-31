@@ -55,6 +55,7 @@ gradlePlugin.testSourceSets(sourceSets.functionalTest)
 configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
 
 tasks.register('functionalTest', Test) {
+	it.testLogging.showStandardStreams = true
     it.testClassesDirs = sourceSets.functionalTest.output.classesDirs
     it.classpath = sourceSets.functionalTest.runtimeClasspath
 }
