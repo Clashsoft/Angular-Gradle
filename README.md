@@ -39,3 +39,4 @@ angular {
     buildArgs = [ 'build', hasProperty('angular-dev') ? '--configuration=gradle' : '--prod' ]
 }
 ```
+> The output of the angular build task (content of the `outputDir` path) is set as main resources target which copies the compiled angular application bundles into static resources build directory 
