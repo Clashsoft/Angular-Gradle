@@ -30,3 +30,7 @@
 
 * Fixed automatic package manager detection using relative file paths.
 * Fixed automatic package manager detection failing if appDir does not exist.
+
+# v0.2.0
+
+* Removed the `angular-dev` configuration in favor of `angular-configuration` (default: `production`). #2
