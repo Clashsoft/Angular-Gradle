@@ -21,7 +21,7 @@ class AngularGradlePlugin implements Plugin<Project> {
 			readNgConfigPackageManager(project.file(it))
 		})
 
-		final String buildConfigArg = project.hasProperty('angular-dev') ? '--configuration=gradle' : '--prod'
+		final String buildConfigArg = '--configuration=' + (project.findProperty('angular-configuration') ?: 'production')
 		config.buildArgs.convention([ 'build', buildConfigArg ])
 		config.packageManagerArgs.convention([ 'install' ])
 
